@@ -1,46 +1,39 @@
-//your JS code here. If required.
-document.addEventListener('DOMContentLoaded', generateBoxes);
+const colors = ['#e74c3c', '#8e44ad', '#3498db', '#e67e22', '#2ecc71']
+// const colors = ['#ff7f50','#87cefa','#da70d6','#32cd32','#6495ed','#ff69b4','#ba55d3','#cd5c5c','#ffa500','#40e0d0']
 
-function generateBoxes() {
-  const container = document.querySelector('.container');
 
-  for (let i = 0; i < 800; i++) {
-    const square = document.createElement('div');
-    square.classList.add('square');
-    container.appendChild(square);
-  }
+const container  = document.getElementById("container")
 
-  addHoverListeners();
+const SQUARES = 800
+
+for(let i=0;i<SQUARES;i++){
+    const square = document.createElement("div")
+    square.classList.add("square")
+
+    square.addEventListener("mouseover",()=> setColor(square))
+    square.addEventListener("mouseout",()=> removeColor(square))
+
+    container.appendChild(square)
 }
 
-function addHoverListeners() {
-  const squares = document.querySelectorAll('.square');
+function setColor(element){
+    const color = randomColor()
 
-  squares.forEach(square => {
-    square.addEventListener('mouseover', handleMouseOver);
-  });
+    element.style.background = color
+    element.style.boxShadow = `0 0 2px ${color}, 0 0 10px ${color}`
+
 }
 
-function handleMouseOver(event) {
-  const square = event.target;
-
-  // Change background color to random color
-  square.style.backgroundColor = getRandomColor();
-
-  // Smoothly transition back to original color after 1 second
-  setTimeout(() => {
-    square.style.backgroundColor = 'lightgray';
-  }, 1000);
+function removeColor(element){
+    element.style.background = "#1d1d1d"
+    element.style.boxShadow = "0 0 2px #000"
+}
+function randomColor(){
+    const index = Math.floor(Math.random()*colors.length)
+    return colors[index]
 }
 
-function getRandomColor() {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
+  
 
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-
-  return color;
-}
-
+ 
+  
